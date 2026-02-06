@@ -1,3 +1,3 @@
-/Users/ancongui/Development/firefly/lib-notifications-firebase/src/main/java/com/firefly/core/notifications/provider/firebase/properties/v1/FcmProperties.java
-/Users/ancongui/Development/firefly/lib-notifications-firebase/src/main/java/com/firefly/core/notifications/provider/firebase/core/v1/FcmPushProvider.java
-/Users/ancongui/Development/firefly/lib-notifications-firebase/src/main/java/com/firefly/core/notifications/provider/firebase/config/v1/FcmConfig.java
+/Users/ancongui/Development/fireflyframework/fireflyframework-notifications-firebase/src/main/java/org/fireflyframework/notifications/providers/firebase/config/v1/FcmConfig.java
+/Users/ancongui/Development/fireflyframework/fireflyframework-notifications-firebase/src/main/java/org/fireflyframework/notifications/providers/firebase/core/v1/FcmPushProvider.java
+/Users/ancongui/Development/fireflyframework/fireflyframework-notifications-firebase/src/main/java/org/fireflyframework/notifications/providers/firebase/properties/v1/FcmProperties.java

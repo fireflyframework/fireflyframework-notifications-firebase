@@ -1,4 +1,4 @@
-# lib-notifications-firebase
+# fireflyframework-notifications-firebase
 
 Firebase Cloud Messaging (FCM) push notification adapter for Firefly Notifications Library.
 
@@ -26,14 +26,14 @@ Add these dependencies to your `pom.xml`:
 
 ```xml path=null start=null
 <dependency>
-  <groupId>com.firefly</groupId>
-  <artifactId>lib-notifications-core</artifactId>
+  <groupId>org.fireflyframework</groupId>
+  <artifactId>fireflyframework-notifications-core</artifactId>
   <version>1.0.0-SNAPSHOT</version>
 </dependency>
 
 <dependency>
-  <groupId>com.firefly</groupId>
-  <artifactId>lib-notifications-firebase</artifactId>
+  <groupId>org.fireflyframework</groupId>
+  <artifactId>fireflyframework-notifications-firebase</artifactId>
   <version>1.0.0-SNAPSHOT</version>
 </dependency>
 ```
@@ -141,7 +141,7 @@ To switch from Firebase to another push provider:
 ## Implementation Details
 
 This adapter:
-- Implements `PushProvider` interface from `lib-notifications-core`
+- Implements `PushProvider` interface from `fireflyframework-notifications-core`
 - Uses Firebase Admin SDK for API calls
 - Transforms `PushNotificationRequest` to FCM `Message` format
 - Handles authentication via service account credentials or ADC
@@ -170,4 +170,4 @@ This adapter:
 
 - [Firebase Cloud Messaging Documentation](https://firebase.google.com/docs/cloud-messaging)
 - [Firebase Admin SDK](https://firebase.google.com/docs/admin/setup)
-- [Firefly Notifications Architecture](../lib-notifications/ARCHITECTURE.md)
+- [Firefly Notifications Architecture](../fireflyframework-notifications/ARCHITECTURE.md)

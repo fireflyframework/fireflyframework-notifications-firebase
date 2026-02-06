@@ -1,3 +1,4 @@
-com/firefly/core/notifications/provider/firebase/config/v1/FcmConfig.class
-com/firefly/core/notifications/provider/firebase/properties/v1/FcmProperties.class
-com/firefly/core/notifications/provider/firebase/core/v1/FcmPushProvider.class
+org/fireflyframework/notifications/providers/firebase/config/v1/FcmConfig.class
+META-INF/spring-configuration-metadata.json
+org/fireflyframework/notifications/providers/firebase/core/v1/FcmPushProvider.class
+org/fireflyframework/notifications/providers/firebase/properties/v1/FcmProperties.class

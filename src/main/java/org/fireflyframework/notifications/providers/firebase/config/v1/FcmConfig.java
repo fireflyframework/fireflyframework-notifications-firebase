@@ -1,5 +1,5 @@
 /*
- * Copyright 2025 Firefly Software Solutions Inc
+ * Copyright 2024-2026 Firefly Software Solutions Inc
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,9 +15,9 @@
  */
 
 
-package com.firefly.core.notifications.providers.firebase.config.v1;
+package org.fireflyframework.notifications.providers.firebase.config.v1;
 
-import com.firefly.core.notifications.providers.firebase.properties.v1.FcmProperties;
+import org.fireflyframework.notifications.providers.firebase.properties.v1.FcmProperties;
 import com.google.auth.oauth2.GoogleCredentials;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
