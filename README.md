@@ -1,5 +1,7 @@
 # fireflyframework-notifications-firebase
 
+[![CI](https://github.com/fireflyframework/fireflyframework-notifications-firebase/actions/workflows/ci.yml/badge.svg)](https://github.com/fireflyframework/fireflyframework-notifications-firebase/actions/workflows/ci.yml)
+
 Firebase Cloud Messaging (FCM) push notification adapter for Firefly Notifications Library.
 
 ## Overview
