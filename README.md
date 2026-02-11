@@ -1,175 +1,91 @@
-# fireflyframework-notifications-firebase
+# Firefly Framework - Notifications - Firebase
 
 [![CI](https://github.com/fireflyframework/fireflyframework-notifications-firebase/actions/workflows/ci.yml/badge.svg)](https://github.com/fireflyframework/fireflyframework-notifications-firebase/actions/workflows/ci.yml)
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](LICENSE)
+[![Java](https://img.shields.io/badge/Java-21%2B-orange.svg)](https://openjdk.org)
+[![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.x-green.svg)](https://spring.io/projects/spring-boot)
 
-Firebase Cloud Messaging (FCM) push notification adapter for Firefly Notifications Library.
+> Firebase Cloud Messaging (FCM) push adapter for Firefly Notifications.
+
+---
+
+## Table of Contents
+
+- [Overview](#overview)
+- [Features](#features)
+- [Requirements](#requirements)
+- [Installation](#installation)
+- [Quick Start](#quick-start)
+- [Configuration](#configuration)
+- [Documentation](#documentation)
+- [Contributing](#contributing)
+- [License](#license)
 
 ## Overview
 
-This module is an **infrastructure adapter** in the hexagonal architecture that implements the `PushProvider` port interface. It handles all Firebase Cloud Messaging integration details, including authentication, message formatting, and delivery to mobile devices.
+Firefly Framework Notifications Messaging implements the `PushProvider` interface from the Firefly Notifications core module using Firebase Cloud Messaging (FCM) as the delivery provider. It provides `FcmPushProvider` which handles push delivery through the Firebase Cloud Messaging (FCM) API.
 
-### Architecture Role
+The module includes auto-configuration for seamless activation when included on the classpath alongside the notifications core module. Configuration properties allow customizing API credentials and provider-specific settings.
 
-```
-Application Layer (PushService)
-    ↓ depends on
-Domain Layer (PushProvider interface)
-    ↑ implemented by
-Infrastructure Layer (FcmPushProvider) ← THIS MODULE
-    ↓ calls
-Firebase Cloud Messaging API
-```
+## Features
 
-This adapter can be replaced with other push providers (AWS SNS Mobile Push, OneSignal) without changing your application code.
+- `PushProvider` implementation using Firebase Cloud Messaging (FCM)
+- Spring Boot auto-configuration for seamless activation
+- Configurable API credentials via application properties
+- Standalone provider library (include alongside fireflyframework-notifications)
+
+## Requirements
+
+- Java 21+
+- Spring Boot 3.x
+- Maven 3.9+
+- Firebase Cloud Messaging (FCM) account and API credentials
 
 ## Installation
 
-Add these dependencies to your `pom.xml`:
-
-```xml path=null start=null
+```xml
 <dependency>
-  <groupId>org.fireflyframework</groupId>
-  <artifactId>fireflyframework-notifications-core</artifactId>
-  <version>1.0.0-SNAPSHOT</version>
+    <groupId>org.fireflyframework</groupId>
+    <artifactId>fireflyframework-notifications-firebase</artifactId>
+    <version>26.01.01</version>
 </dependency>
+```
 
-<dependency>
-  <groupId>org.fireflyframework</groupId>
-  <artifactId>fireflyframework-notifications-firebase</artifactId>
-  <version>1.0.0-SNAPSHOT</version>
-</dependency>
+## Quick Start
+
+```xml
+<dependencies>
+    <dependency>
+        <groupId>org.fireflyframework</groupId>
+        <artifactId>fireflyframework-notifications</artifactId>
+    </dependency>
+    <dependency>
+        <groupId>org.fireflyframework</groupId>
+        <artifactId>fireflyframework-notifications-firebase</artifactId>
+    </dependency>
+</dependencies>
 ```
 
 ## Configuration
 
-Add the following to your `application.yml`:
-
-```yaml path=null start=null
-notifications:
-  push:
-    provider: firebase  # Enables this adapter
-
-firebase:
-  project-id: your-firebase-project-id
-  credentials-path: /path/to/service-account.json  # Optional: uses Application Default Credentials if omitted
+```yaml
+firefly:
+  notifications:
+    firebase:
+      credentials-path: /path/to/firebase-credentials.json
+      project-id: my-firebase-project
 ```
 
-### Getting Your Credentials
+## Documentation
 
-1. Go to [Firebase Console](https://console.firebase.google.com)
-2. Select your project (or create one)
-3. Navigate to Project Settings → Service Accounts
-4. Click "Generate New Private Key"
-5. Download the JSON file
-6. Set the path in configuration:
-   ```yaml
-   firebase:
-     credentials-path: /etc/firebase/service-account.json
-   ```
+No additional documentation available for this project.
 
-Alternatively, use Application Default Credentials (ADC) by omitting `credentials-path`.
+## Contributing
 
-## Usage
+Contributions are welcome. Please read the [CONTRIBUTING.md](CONTRIBUTING.md) guide for details on our code of conduct, development process, and how to submit pull requests.
 
-Inject `PushService` from the core library. Spring automatically wires this adapter:
+## License
 
-```java path=null start=null
-@Service
-public class MobileNotificationService {
-    
-    @Autowired
-    private PushService pushService;
-    
-    public void sendNotificationToUser(String deviceToken, String title, String message) {
-        PushNotificationRequest request = PushNotificationRequest.builder()
-            .token(deviceToken)
-            .title(title)
-            .body(message)
-            .data(Map.of(
-                "type", "alert",
-                "timestamp", Instant.now().toString()
-            ))
-            .build();
-        
-        pushService.sendPush(request)
-            .subscribe(response -> {
-                if (response.isSuccess()) {
-                    log.info("Push sent: {}", response.getMessageId());
-                } else {
-                    log.error("Failed: {}", response.getErrorMessage());
-                }
-            });
-    }
-}
-```
+Copyright 2024-2026 Firefly Software Solutions Inc.
 
-## Features
-
-- **Multi-platform** - Supports iOS, Android, and web push
-- **Rich notifications** - Title, body, and custom data payloads
-- **Device targeting** - Send to specific device tokens
-- **Reactive** - Returns `Mono<PushNotificationResponse>`
-- **Error handling** - Graceful error messages for failed deliveries
-
-### Sending with Custom Data
-
-```java path=null start=null
-Map<String, String> customData = Map.of(
-    "action", "open_chat",
-    "chat_id", "12345",
-    "priority", "high"
-);
-
-PushNotificationRequest request = PushNotificationRequest.builder()
-    .token(userDeviceToken)
-    .title("New Message")
-    .body("You have a new message from John")
-    .data(customData)
-    .build();
-
-pushService.sendPush(request).subscribe();
-```
-
-## Switching Providers
-
-To switch from Firebase to another push provider:
-
-1. Remove this dependency from `pom.xml`
-2. Add alternative push adapter dependency
-3. Update configuration to use different provider
-
-**No code changes required** in your services—hexagonal architecture ensures provider independence!
-
-## Implementation Details
-
-This adapter:
-- Implements `PushProvider` interface from `fireflyframework-notifications-core`
-- Uses Firebase Admin SDK for API calls
-- Transforms `PushNotificationRequest` to FCM `Message` format
-- Handles authentication via service account credentials or ADC
-- Returns standardized `PushNotificationResponse`
-
-## Troubleshooting
-
-### Error: "No qualifying bean of type 'PushProvider'"
-
-- Ensure `notifications.push.provider=firebase` is set
-- Verify `firebase.project-id` is configured
-
-### Error: "Failed to get credentials"
-
-- Check that `credentials-path` points to a valid service account JSON
-- Ensure the file has proper read permissions
-- Try using Application Default Credentials
-
-### Error: "Invalid registration token"
-
-- Device token may be expired or invalid
-- Regenerate the FCM token on the client device
-- Ensure you're using the correct token for the platform (iOS/Android)
-
-## References
-
-- [Firebase Cloud Messaging Documentation](https://firebase.google.com/docs/cloud-messaging)
-- [Firebase Admin SDK](https://firebase.google.com/docs/admin/setup)
-- [Firefly Notifications Architecture](../fireflyframework-notifications/ARCHITECTURE.md)
+Licensed under the Apache License, Version 2.0. See [LICENSE](LICENSE) for details.
