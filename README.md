@@ -47,7 +47,7 @@ The module includes auto-configuration for seamless activation when included on 
 <dependency>
     <groupId>org.fireflyframework</groupId>
     <artifactId>fireflyframework-notifications-firebase</artifactId>
-    <version>26.02.03</version>
+    <version>26.02.04</version>
 </dependency>
 ```
 
