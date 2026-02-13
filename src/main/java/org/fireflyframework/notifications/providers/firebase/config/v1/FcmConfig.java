@@ -17,23 +17,30 @@
 
 package org.fireflyframework.notifications.providers.firebase.config.v1;
 
+import org.fireflyframework.notifications.interfaces.interfaces.providers.push.v1.PushProvider;
+import org.fireflyframework.notifications.providers.firebase.core.v1.FcmPushProvider;
 import org.fireflyframework.notifications.providers.firebase.properties.v1.FcmProperties;
 import com.google.auth.oauth2.GoogleCredentials;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
 import com.google.firebase.messaging.FirebaseMessaging;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.boot.autoconfigure.AutoConfiguration;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.List;
 
 @Slf4j
-@Configuration
-@ConditionalOnProperty(prefix = "firebase", name = "project-id")
+@AutoConfiguration
+@ConditionalOnProperty(name = "firefly.notifications.push.provider", havingValue = "firebase")
+@ConditionalOnClass(FirebaseMessaging.class)
+@EnableConfigurationProperties(FcmProperties.class)
 public class FcmConfig {
 
     @Bean
@@ -61,5 +68,11 @@ public class FcmConfig {
     @Bean
     public FirebaseMessaging firebaseMessaging(FirebaseApp firebaseApp) {
         return FirebaseMessaging.getInstance(firebaseApp);
+    }
+
+    @Bean
+    @ConditionalOnMissingBean(PushProvider.class)
+    public PushProvider fcmPushProvider(FirebaseMessaging firebaseMessaging) {
+        return new FcmPushProvider(firebaseMessaging);
     }
 }

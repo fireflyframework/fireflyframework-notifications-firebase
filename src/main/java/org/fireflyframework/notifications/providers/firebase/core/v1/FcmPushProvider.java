@@ -23,18 +23,18 @@ import org.fireflyframework.notifications.interfaces.interfaces.providers.push.v
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.firebase.messaging.Message;
 import com.google.firebase.messaging.Notification;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
 import reactor.core.scheduler.Schedulers;
 
 import java.util.Map;
 
-@Component
 public class FcmPushProvider implements PushProvider {
 
-    @Autowired
-    private FirebaseMessaging messaging;
+    private final FirebaseMessaging messaging;
+
+    public FcmPushProvider(FirebaseMessaging messaging) {
+        this.messaging = messaging;
+    }
 
     @Override
     public Mono<PushNotificationResponse> sendPush(PushNotificationRequest request) {
