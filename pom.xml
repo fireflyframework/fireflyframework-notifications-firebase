@@ -7,21 +7,19 @@
     <parent>
         <groupId>org.fireflyframework</groupId>
         <artifactId>fireflyframework-parent</artifactId>
-        <version>26.02.04</version>
+        <version>26.02.06</version>
         <relativePath/>
     </parent>
 
     <groupId>org.fireflyframework</groupId>
     <artifactId>fireflyframework-notifications-firebase</artifactId>
-    <version>26.02.04</version>
+    <version>26.02.06</version>
     <packaging>jar</packaging>
 
     <name>Firefly Framework - Notifications - Firebase</name>
     <description>Firebase Cloud Messaging (FCM) push adapter for Firefly Notifications</description>
 
     <properties>
-        <maven.compiler.source>21</maven.compiler.source>
-        <maven.compiler.target>21</maven.compiler.target>
         <firebase-admin.version>9.7.1</firebase-admin.version>
     </properties>
 

@@ -1,1 +1,1 @@
-org.fireflyframework.notifications.providers.firebase.config.v1.FcmConfig
+org.fireflyframework.notifications.providers.firebase.config.v1.FcmAutoConfiguration

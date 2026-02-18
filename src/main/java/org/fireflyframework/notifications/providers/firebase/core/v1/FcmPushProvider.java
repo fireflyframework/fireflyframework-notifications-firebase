@@ -19,7 +19,7 @@ package org.fireflyframework.notifications.providers.firebase.core.v1;
 
 import org.fireflyframework.notifications.interfaces.dtos.push.v1.PushNotificationRequest;
 import org.fireflyframework.notifications.interfaces.dtos.push.v1.PushNotificationResponse;
-import org.fireflyframework.notifications.interfaces.interfaces.providers.push.v1.PushProvider;
+import org.fireflyframework.notifications.interfaces.providers.push.v1.PushProvider;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.firebase.messaging.Message;
 import com.google.firebase.messaging.Notification;

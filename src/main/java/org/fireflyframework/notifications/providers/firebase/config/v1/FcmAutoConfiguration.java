@@ -17,7 +17,7 @@
 
 package org.fireflyframework.notifications.providers.firebase.config.v1;
 
-import org.fireflyframework.notifications.interfaces.interfaces.providers.push.v1.PushProvider;
+import org.fireflyframework.notifications.interfaces.providers.push.v1.PushProvider;
 import org.fireflyframework.notifications.providers.firebase.core.v1.FcmPushProvider;
 import org.fireflyframework.notifications.providers.firebase.properties.v1.FcmProperties;
 import com.google.auth.oauth2.GoogleCredentials;
@@ -41,8 +41,9 @@ import java.util.List;
 @ConditionalOnProperty(name = "firefly.notifications.push.provider", havingValue = "firebase")
 @ConditionalOnClass(FirebaseMessaging.class)
 @EnableConfigurationProperties(FcmProperties.class)
-public class FcmConfig {
+public class FcmAutoConfiguration {
 
+    @ConditionalOnMissingBean
     @Bean
     public FirebaseApp firebaseApp(FcmProperties properties) throws IOException {
         log.info("Initializing Firebase Cloud Messaging provider for project: {}", properties.getProjectId());
@@ -65,6 +66,7 @@ public class FcmConfig {
         return apps.get(0);
     }
 
+    @ConditionalOnMissingBean
     @Bean
     public FirebaseMessaging firebaseMessaging(FirebaseApp firebaseApp) {
         return FirebaseMessaging.getInstance(firebaseApp);
